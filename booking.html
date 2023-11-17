@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Airbnb Clone Booking</title>
-    <link rel="icon" type="image/x-icon" href="./assets/airbnb.png">
   </head>
-  <body>
+  <body onload="loadImage()">
     <section id="navbar" class="sticky px-[5rem]">
       <div class="flex py-3 justify-between">
         <div class="flex items-center gap-2 h-[50px]">
@@ -15,7 +13,7 @@
           <p class="text-red-500 text-[1.2rem] font-bold">airbnb</p>
         </div>
         <div class="flex p-3 h-[50px] border-2 border-inherit rounded-full">
-          <input class="font-semibold px-3 text-gray-400 outline-none placeholder-gray-900 placeholder-opacity-100 ..." placeholder="Start yout search">
+          <input class="font-semibold px-3 text-gray-400 outline-none placeholder-gray-900 placeholder-opacity-100 ..." placeholder="Start your search">
           <div class="h-full">
             <img
               class="h-[100%] bg-red-500 p-1 rounded-full"
@@ -40,7 +38,7 @@
       </div>
 
       <div
-        class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-200"
+        class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700"
       >
         <ul class="flex flex-wrap -mb-px">
           <li class="me-2">
@@ -54,15 +52,12 @@
       </div>
     </section>
     <section id="rooms" class="mx-[5rem] mt-[2rem]">
-        <div class="flex flex-wrap gap-4">
-    <div class="font-bold text-black text-2xl absolute inset-x-50 top-30 h-16 ... ">
-        <!-- <h1>Hotel Name and Discription</h1>     -->
-    </div>
-    <div class="grid grid-cols-2 " >
-    <div class="text-gray-400 w-[100%] h-[95.4%] flex space-x-4">
+        <div id="img-div" class="flex flex-wrap gap-4">
+    <!-- <div class="grid grid-cols-2 " >
+    <div  class="text-gray-400 w-[95.4%] flex space-x-4">
         <img class="rounded" src="./assets/cover.webp" alt="" />
     </div>    
-        <div class="grid grid-cols-2 grid-rows-2">
+        <div id="other-imgs" class="grid grid-cols-2 grid-rows-2">
         <img class="rounded w-[90%]  " src="./assets/cover.webp" alt="" />
         <img class="rounded w-[90%]" src="./assets/cover.webp" alt="" />
         <img class="rounded w-[90%]" src="./assets/cover.webp" alt="" />
@@ -71,23 +66,15 @@
     <div class="flex justify-between mt-[1rem]">
         <h1 class="ffont-bold text-black text-2xl">Entire rental unit in Dubai, United Arab Emirates</h1>
     </div>
-      </div>
+      </div> -->
 </div>
-<div class="flex justify-between">
-<div class="font-bold mb-5 p-4 text-right">
-    Hosted By Saqib Ashraf
-    <div
-        class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-200"
-      >
-      </div>
-</div>
-<div class="inline-block shadow-inner shadow-xl p-6 ">
+<!-- <div class="inline-block">
     <div class="mx-auto w-full max-w-[550px]">
-      <form action="https://formbold.com/s/FORM_ID" method="POST">
+      <form action="booking.html" method="POST">
         <div class="mb-5">
-            <div class="font-bold text-black text-2xl">
-                <h1>190$</h1>
-            </div>
+          <div id="get-price" class="font-bold text-2xl">
+            190$
+          </div>
           <label
             for="guest"
             class="mb-3 block text-base font-medium text-[#07074D]"
@@ -152,8 +139,7 @@
         </div>
       </form>
     </div>
-  </div>
-</div>  
+  </div> -->
 </section>
     <section id="footer" class="px-[5rem] py-[2rem] mt-[3rem] bg-gray-100">
       <div class="flex justify-between py-[2rem] border-y-2 border-inherit">
@@ -203,5 +189,23 @@
         </div>
       </div>
     </section>
+    <script>
+      function loadImage() {
+        let params=window.location.href.split('?').reverse()[0]
+        const id = params.split('=').reverse()[0]
+        console.log(window.location.href.split('?').reverse()[0])
+      var imgDiv = document.getElementById("img-div");
+      var req = new XMLHttpRequest();
+      req.open("GET", `reserve_form.php?id=${id}`);
+      req.send();
+      req.onreadystatechange = function() {
+          console.log("--------------------")
+        if (req.readyState === 4 || req.status === 200) {
+                console.log(req.responseText);
+                imgDiv.innerHTML = req.responseText;
+            }
+        };
+    } 
+    </script>
   </body>
 </html>
