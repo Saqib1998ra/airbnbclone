@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <title>Airbnb Clone Booking</title>
+    <link rel="icon" type="image/x-icon" href="./assets/airbnb.png">
   </head>
   <body>
     <section id="navbar" class="sticky px-[5rem]">
@@ -42,11 +44,6 @@
       >
         <ul class="flex flex-wrap -mb-px">
           <li class="me-2">
-            <a
-              href="#"
-              class="inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-500"
-              >Dashboard</a
-            >
           </li>
         </ul>
       </div>
@@ -65,35 +62,29 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Check if the ID parameter is set in the URL
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
 
-            // Use prepared statement to prevent SQL injection
             $stmt = $conn->prepare("SELECT * FROM listing WHERE id = ?");
             $stmt->bind_param("i", $id); // 'i' represents an integer, assuming ID is an integer
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Fetch the details of the single listing
                 $row = $result->fetch_assoc();
                 $image = htmlspecialchars($row['image']);
                 $city = htmlspecialchars($row['city']);
                 $address = htmlspecialchars($row['address']);
                 $price = htmlspecialchars($row['price']);
 
-                // Display property information for the single listing
                 echo "<div class='grid grid-cols-2'>";
                 echo "<div class='rounded'>";
                 echo "<img class='rounded w-[90%]' src='$image' alt='' />";
                 echo "</div>";
                 echo "<div class='grid grid-cols-2 grid-rows-2'>";
 
-                // Repeat the images for the single listing
                 for ($i = 0; $i < 4; $i++) {
                     echo "<img class='rounded w-[90%] p-[2%]' src='$image' alt='' />";
-                    // Adjust the width and height attributes as per your requirements
                 }
 
                 echo "</div>";
@@ -140,80 +131,81 @@
 </div>
 <?php
 echo '<div class="inline-block shadow-inner shadow-xl p-6 ">';
- echo   '<div class="mx-auto w-full max-w-[550px]">';
-   echo   '<form action="https://formbold.com/s/FORM_ID" method="POST">';
-    echo    '<div class="mb-5">';
-      echo      '<div class="font-bold text-black text-2xl">';
-         echo     "<h1 class='font-bold text-[#07074D]'>Price: $price</h1>";
-          echo  '</div>';
-            ?>
-          <label
-            for="guest"
-            class="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            How many guest are you bringing?
-          </label>
-          <input
-            type="number"
-            name="guest"
-            id="guest"
-            placeholder="0"
-            min="0"
-            class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
-  
-        <div class="-mx-3 flex flex-wrap">
-          <div class="w-full px-3 sm:w-1/2">
-            <div class="mb-5">
-              <label
-                for="date"
-                class="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Check In
-              </label>
-              <input
-                type="date"
-                name="date"
-                id="date"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-              />
-            </div>
-          </div>
-          <div class="w-full px-3 sm:w-1/2">
-            <div class="mb-5">
-              <label
-                for="time"
-                class="mb-3 block text-base font-medium text-[#07074D]"
-              >
-             Check Out
-            </label>
-            <input
-              type="date"
-              name="date"
-              id="date"
-              class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-1/2">
-          <div class="mb-5">
-            <label
-              for="time"
-              class="mb-3 block text-base font-medium text-[#07074D]"
-            >
-        <div>
-          <button
-            class="hover:shadow-form rounded-md bg-[crimson] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-          >
-            Reserve
-          </button>
-        </div>
-      </form>
+echo '<div class="mx-auto w-full max-w-[550px]">';
+echo '<form action="reserve.php" method="POST">';
+
+echo '<div class="mb-5">';
+echo '<div class="font-bold text-black text-2xl">';
+echo "<h1 class='font-bold text-[#07074D]'>Price: $price</h1>";
+echo '</div>';
+?>
+<input type="hidden" name="price" value="<?php echo $price; ?>">
+<label
+  for="guest"
+  class="mb-3 block text-base font-medium text-[#07074D]"
+>
+  How many guests are you bringing?
+</label>
+<input
+  type="number"
+  name="guest"
+  id="guest"
+  placeholder="0"
+  min="0"
+  class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+/>
+</div>
+
+<div class="-mx-3 flex flex-wrap">
+  <div class="w-full px-3 sm:w-1/2">
+    <div class="mb-5">
+      <label
+        for="date"
+        class="mb-3 block text-base font-medium text-[#07074D]"
+      >
+        Check In
+      </label>
+      <input
+        type="date"
+        name="check_in" 
+        id="date"
+        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+      />
     </div>
   </div>
-</div>  
+  <div class="w-full px-3 sm:w-1/2">
+    <div class="mb-5">
+      <label
+        for="time"
+        class="mb-3 block text-base font-medium text-[#07074D]"
+      >
+        Check Out
+      </label>
+      <input
+        type="date"
+        name="check_out"
+        id="date"
+        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+      />
+    </div>
+  </div>
+  <div class="w-full px-3 sm:w-1/2">
+        <button
+          type="submit"
+          name="reserve_button" 
+          class="hover:shadow-form rounded-md bg-[crimson] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+        >
+          Reserve
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+</div>
+</div>
 </section>
+
 <section id="footer" class="px-[5rem] py-[2rem] mt-[3rem] bg-gray-100">
   <div class="flex justify-between py-[2rem] border-y-2 border-inherit">
     <div>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <title>Airbnb Clone Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="./assets/airbnb.png">
   </head>
   <body>
     <section
@@ -83,9 +85,8 @@
                 $address = htmlspecialchars($row['address']);
                 $date = htmlspecialchars($row['date']);
                 $price = htmlspecialchars($row['price']);
-                $listingId = $row['id']; // Assuming 'id' is the name of the primary key column
+                $listingId = $row['id'];
 
-                // Set a fixed size for the images
                 echo "<div class='text-gray-400 w-[23%]' onclick=\"redirectToBooking('$listingId', '$city')\" style='cursor: pointer;'>";
                 echo "<img class='rounded' src='$image' alt='' style='width: 100%; height: 200px;' />";
                 echo "<div class='flex justify-between mt-[1rem]'>";
