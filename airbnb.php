@@ -18,7 +18,7 @@
       <div class="flex py-3 justify-between">
         <div class="flex items-center gap-2 h-[50px]">
           <img class="h-full" src="./assets/airbnb.png" alt="" />
-          <p class="text-red-500 text-[1.2rem] font-bold">airbnb</p>
+          <p onclick="window.location.href='airbnb.php'" class="cursor-pointer text-red-500 text-[1.2rem] font-bold">airbnb</p>
         </div>
         <div class="flex p-3 h-[50px] border-2 border-inherit rounded-full">
           <p class="px-3 text-black font-semibold">Anywhere</p>
